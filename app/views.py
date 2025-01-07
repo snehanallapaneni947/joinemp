@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from app.models import *
 from django.db.models.functions import Length
+from django.db.models import Q
 
 def empdept(request):
     
@@ -22,3 +23,20 @@ def empdept(request):
     d={'LEDO':LEDO}
     
     return render(request,'empdept.html',d)
+
+def empmgrdata(request):
+    LMDO=Emp.objects.select_related('empmgr').all()
+    m={'LMDO':LMDO}
+
+    return render(request,'empmgrdata.html',m)
+
+def empdeptmgr(request):
+    LEDMO=Emp.objects.select_related('empmgr','deptno').all()
+    LEDMO=Emp.objects.select_related('empmgr','deptno').filter(empname__startswith='s',empmgr__empjob='clark')
+    LEDMO=Emp.objects.select_related('empmgr','deptno').filter(deptno__deptname='Accounting')
+    LEDMO=Emp.objects.select_related('empmgr','deptno').filter(Q(empsal__gt=30000) & Q(deptno__deptloc='chicago'))
+    LEDMO=Emp.objects.select_related('empmgr','deptno').order_by('empname')
+    LEDMO=Emp.objects.select_related('empmgr','deptno').filter(empcomm__isnull=False)
+
+    e={'LEDMO':LEDMO}
+    return render(request,'empdeptmgr.html',e)

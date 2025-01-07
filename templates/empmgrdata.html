@@ -1,5 +1,3 @@
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,11 +16,11 @@
                 <th>empcomm</th>
                 <th>emphirdate</th>
                 <th>empmgr</th>
-                <th>deptno</th>
-                <th>deptname</th>
-                <th>deptloc</th>
+                <th>mgrname</th>
+                <th>mgrid</th>
+                <th>mgrsal</th>
             </tr>
-            {% for edo in LEDO %}
+            {% for edo in LMDO %}
              <tr>
                 <th>{{edo.deptno}}</th>
                 <th>{{edo.empid}}</th>
@@ -33,9 +31,9 @@
                 <th>{{edo.empcomm}}</th>
                 <th>{{edo.emphirdate}}</th>
                 <th>{{edo.empmgr}}</th>
-                <th>{{edo.deptno.deptno}}</th>
-                <th>{{edo.deptno.deptname}}</th>
-                <th>{{edo.deptno.deptloc}}</th>
+                <th>{{edo.empmgr.empname}}</th>
+                <th>{{edo.empmgr.empid}}</th>
+                <th>{{edo.empmgr.empsal}}</th>
 
              </tr>
              {% endfor %}

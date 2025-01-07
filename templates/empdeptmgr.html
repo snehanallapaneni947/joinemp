@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="2px">
+        <tr>
+            <th>empname</th>
+            <th>empsal</th>
+            <th>empjob</th>
+            <th>empcom</th>
+            <th>empmgr</th>
+
+            <th>deptno</th>
+            <th>deptname</th>
+            <th>deptloc</th>
+            
+            
+            <th>mgrsal</th>
+            <th>mgrjob</th>
+            <th>mgrcom</th>
+
+            
+            
+        </tr>
+        {% for edm in LEDMO %}
+        <tr>
+             <th>{{edm.empname}}</th>
+             <th>{{edm.empsal}}</th>
+             <th>{{edm.empjob}}</th>
+             <th>{{edm.empcomm}}</th>
+             <th>{{edm.empmgr}}</th>
+             <th>{{edm.deptno.deptno}}</th>
+             <th>{{edm.deptno.deptname}}</th>
+             <th>{{edm.deptno.deptloc}}</th>
+             <th>{{edm.empmgr.empsal}}</th>
+             <th>{{edm.empmgr.empjob}}</th>
+             <th>{{edm.empmgr.empcomm}}</th>
+             
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
