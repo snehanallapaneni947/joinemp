@@ -40,3 +40,9 @@ def empdeptmgr(request):
 
     e={'LEDMO':LEDMO}
     return render(request,'empdeptmgr.html',e)
+
+def empDeptpr(request):
+    LDEO=Dept.objects.prefetch_related('emp_set').all()
+    print(LDEO)
+    d={'LDEO':LDEO}
+    return render (request,'empDeptpr.html',d)
