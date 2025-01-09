@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from app.models import *
 from django.db.models.functions import Length
-from django.db.models import Q
+from django.db.models import Q,Prefetch
 
 def empdept(request):
     
@@ -43,6 +43,29 @@ def empdeptmgr(request):
 
 def empDeptpr(request):
     LDEO=Dept.objects.prefetch_related('emp_set').all()
+     #all dept objects and all related emp objects
+    
+    LDEO=Dept.objects.prefetch_related('emp_set').filter(deptno=10)
+     # only dept 10 object and all related emp objects
+
+    LDEO=Dept.objects.prefetch_related(Prefetch('emp_set',queryset=Emp.objects.filter(empname='sneha')))
+     # all dept objects but specific emp object
+    
+    DO=Dept.objects.filter(deptno=10)
+    LDEO=Dept.objects.filter(deptno__in=DO).prefetch_related(Prefetch('emp_set',queryset=Emp.objects.filter(empname='sneha')))
+     # only specific dept object and emp object
+    DO=Dept.objects.filter(deptno=30)
+    
+    LDEO=Dept.objects.filter(deptno__in=DO).prefetch_related(Prefetch('emp_set',queryset=Emp.objects.filter(empsal__gt=1000)))
+
+    
+
+   # DO=Dept.objects.filter(deptno=10).values('deptname','deptloc')
+
+   # EO=Emp.objects.filter(empname='sneha').values_list('empsal','empcomm','deptno')
+   # print(EO)
+    #print(DO)
     print(LDEO)
     d={'LDEO':LDEO}
     return render (request,'empDeptpr.html',d)
+
