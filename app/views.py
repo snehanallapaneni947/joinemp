@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from app.models import *
 from django.db.models.functions import Length
-from django.db.models import Q,Prefetch
+from django.db.models import Q,Prefetch,Max,Min,Count,Sum,Avg
 
 def empdept(request):
     
@@ -20,7 +20,20 @@ def empdept(request):
     LEDO=Emp.objects.select_related('deptno').exclude(empmgr__isnull=False)
     LEDO=Emp.objects.select_related('deptno').filter(empjob__startswith='s')
     LEDO=Emp.objects.select_related('deptno').exclude(empname__regex='W+\s')
+    LEDO=Emp.objects.select_related('deptno').all()
+
+    MO=Emp.objects.select_related('deptno').aggregate(Max('empsal'))
+    AO=Emp.objects.select_related('deptno').aggregate(Avg('empcomm'))
+    print(MO)
+    print(AO)
+    
+    LEDO=Emp.objects.select_related('deptno').annotate(LOE=Length('empname')).filter(LOE=5)
+    LEDO=Emp.objects.select_related('deptno').annotate(LOE=Length('empname')).filter(LOE__gt=5)
+    DO=Dept.objects.filter(deptno=10)
+    MA=Emp.objects.filter(deptno__in=DO).select_related('deptno').aggregate(Max('empsal'))['empsal__max']
+    print(MA)
     d={'LEDO':LEDO}
+
     
     return render(request,'empdept.html',d)
 
